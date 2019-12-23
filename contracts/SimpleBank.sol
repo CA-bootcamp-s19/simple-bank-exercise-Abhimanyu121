@@ -11,7 +11,7 @@ contract SimpleBank {
     //
     // State variables
     //
-    mapping (address => bool) users;
+   
     
     /* Fill in the keyword. Hint: We want to protect our users balance from other contracts*/
     mapping (address => uint) private balances;
@@ -68,7 +68,7 @@ contract SimpleBank {
     /// @return The users enrolled status
     // Emit the appropriate event
     function enroll() public returns (bool){
-        users[msg.sender] = true;
+        enrolled[msg.sender] = true;
         emit LogEnrolled(msg.sender);
         return true;
     }
@@ -82,7 +82,7 @@ contract SimpleBank {
     function deposit() public payable returns (uint) {
         /* Add the amount to the user's balance, call the event associated with a deposit,
           then return the balance of the user */
-          require (users[msg.sender]==true,"User not enrolled");
+          require (enrolled[msg.sender]==true,"User not enrolled");
           balances[msg.sender]=balances[msg.sender]+msg.value;
           emit LogDepositMade(msg.sender,msg.value);
           return balances[msg.sender];
